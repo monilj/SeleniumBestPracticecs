@@ -10,7 +10,7 @@ public class JavaScreiptExecutorUtility {
     WebDriver driver;
     @BeforeTest
     public void setUp(){
-        WebDriverManager.chromedriver().setup();
+        WebDriverManager.chromedriver().setup(); 
         driver = new ChromeDriver();
     }
     @Test
