@@ -1,0 +1,90 @@
+SQL
+DDL – Data Definition Language
+Create, Drop,Alter, Truncate
+
+
+
+DML – Data Manipulation Language
+Insert, Update, Delete
+
+DQL – Data Query Language
+Select
+
+DCL – Data Control Language
+Grant, Revoke
+GRANT privileges_names ON object TO user;
+
+INNER JOIN: Returns records that have matching values in both tables
+LEFT JOIN: Returns all records from the left table, and the matched records from the right table
+RIGHT JOIN: Returns all records from the right table, and the matched records from the left table
+CROSS JOIN: Returns all records from both tables
+
+SQL JDBC
+Class.forName(com.mysql.jdbc.driver)
+Connection con = DriverManager.getConnection(jdbc:mysql://localhost:3306/dbName, username, password
+Statemenet st = con.createStatement()
+ResultSet rs = st.executeQuery(Select * from table)
+while(rs.hasNext)
+	{
+	rs.get("name")
+	}
+	
+	
+DDL
+Create
+CREATE TABLE table_name (
+    column1 datatype,
+    column2 datatype,
+    column3 datatype,
+   ....
+);
+
+Drop
+DROP TABLE table_name;
+
+Alter
+ALTER TABLE Customers
+ADD Email varchar(255);
+
+ALTER TABLE table_name
+DROP COLUMN column_name;
+
+Trubcate
+TRUNCATE TABLE Categories;
+
+DML
+Insert
+INSERT INTO Customers (CustomerName, ContactName, Address, City, PostalCode, Country)
+VALUES ('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway');
+
+
+Update
+UPDATE Customers
+SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'
+WHERE CustomerID = 1;
+
+Delete
+DELETE FROM Customers WHERE CustomerName='Alfreds Futterkiste';
+
+
+DQL
+Select
+SELECT CustomerName, City FROM Customers;
+Select * from table_name
+
+Innert join
+SELECT Orders.OrderID, Customers.CustomerName
+FROM Orders
+INNER JOIN Customers ON Orders.CustomerID = Customers.CustomerID;
+
+Left 
+SELECT Customers.CustomerName, Orders.OrderID
+FROM Customers
+LEFT JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+ORDER BY Customers.CustomerName;
+
+Right join
+SELECT Orders.OrderID, Employees.LastName, Employees.FirstName
+FROM Orders
+RIGHT JOIN Employees ON Orders.EmployeeID = Employees.EmployeeID
+ORDER BY Orders.OrderID;

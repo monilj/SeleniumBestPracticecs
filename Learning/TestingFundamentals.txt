@@ -1,0 +1,64 @@
+Equivalence partition
+If the range condition is given as an input, then one valid and two invalid equivalence classes are defined. 
+If a specific value is given as input, then one valid and two invalid equivalence classes are defined. 
+If a member of set is given as an input, then one valid and one invalid equivalence class is defined. 
+If Boolean no. is given as an input condition, then one valid and one invalid equivalence class is defined. 
+
+
+NFR
+
+Performance and Scalability
+Portability and compatibility
+Reliability, maintainability, and availability
+Security 
+Localization: refers to the system’s adaptability to different languages and cultures.
+Usability
+Manageability
+Data integrity
+Capacity 
+Utility
+Interoperability
+Environmental
+
+
+ PDCA model stands for
+
+Plan: Identify improvements and set targets
+Do: Implement improvements
+Check: Check result of improvements
+Act: Learn from results
+Acceptance criteria 
+refer to a set of predefined requirements that must be met to mark a user story complete. Acceptance criteria are also sometimes called the “definition of done” because they determine the scope and requirements that must be executed by developers to consider the user story finished.
+
+
+Bug life cycle 
+
+New
+Assigned
+Open
+Fixed
+Pending retest
+Retest
+
+duplicate, not repro, reopen, traige, ready for grooming
+====================================================================================================
+Risks in project
+
+Strategy Risk: This includes Budget, Communication and Management risks
+Project Definition Risks: This includes Project target, Scope, and requirements risks.
+Human Resources Risk: This includes Skill, Team members and organization risks.
+Project Schedule Risks.
+
+
+Esitmation 
+During Test Estimation, a Test Manager must evaluate four things
+
+Cost
+Resources
+Human Skills
+Time
+
+Techniqu
+
+1. Planning pocker
+2. T-shirt size

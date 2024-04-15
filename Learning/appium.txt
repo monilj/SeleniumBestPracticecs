@@ -1,0 +1,338 @@
+APPIUM 
+
+adb start-server
+adb kill-server
+adb devices
+adb shell cmd package list packages
+adb shell
+
+Get package and acitvity
+dumpsys window windows | grep -E 'mCurrentFocus'
+==========================================================================================================
+appium -p 4723 --base-path=/wd/hub
+
+switching between apps
+   HashMap<String, Object> args = new HashMap<>();
+//            args.put("bundleId", PHOTOS_BUNDLE_ID);
+//            iosDriver.executeScript("mobile: launchApp", args);
+            iosDriver.activateApp(PHOTOS_BUNDLE_ID);
+
+==========================================================================================================
+Scroll
+
+javascriptExecutor jse = (JavaScriptExecutor)driver
+HashMap<String, String> scrollObject = new HashMap<String, String>();
+scrollObject.put("direction","down"); //up, left, right
+scrollObject.put("element","((RemoteWebElemet)element).getID()"); 
+jse.executeScript("mobile:swipe", scrollObject);
+
+
+OR 
+
+JavascriptExecutor js = (JavascriptExecutor) driver;
+HashMap<String, String> tapObject = new HashMap<String, String>();
+tapObject.put("x", String.valueOf(el.getSize().getWidth() / 2));
+tapObject.put("y", String.valueOf(el.getSize().getHeight() / 2));
+tapObject.put("element", ((RemoteWebElemet)element).getId());
+js.executeScript("mobile:tap", tapObject);
+
+
+OR 
+
+driver.findElementByAndroidUIAutomator(new UIScrollable(new UISelector()).scrollIntoView(new UISelector().text(\"view");
+
+OR
+TouchAction myAction = new TouchAction((MobileDriver)driver);
+Dimension size = driver.manage().window().getSize();
+int startY= (int)(size.height * 0.75);
+int endY= (int)(size.width * 0.07);
+int coordX= (int)(size.width * 0.50);
+
+myAction.press(coordX,startY).waitAction(3000).moveTo(coordX,endY).releas().perform();
+
+==================================================================================================================
+Parallel execution
+https://stackoverflow.com/questions/41034116/how-to-execute-cucumber-feature-file-parallel
+
+@BeforeMethod 
+@Parameters({"deviceName, platformVersion, portNumber})
+public void initiateDriver(String deviceName, String platformVersion, String portNumber) throws MalformedURLException{
+DesiredCapability dc = new DesiredCapability
+dc.setCapabilty("deviceName", deviceName);
+dc.setCapabilty("platformVersion", platformVersion);
+dc.setCapabilty("platformName", "Android");
+dc.setCapabilty("appPackage", "com.android.Calculator");
+dc.setCapabilty("appActivity", ".Calculator");
+AndroidDriver<AndroidElement> androidDriver = new AndroidDriver<AndroidElement>(new URL("http://127.0.0.1:"+portNumber+"/wd/hub"),dc);
+
+}
+
+Go to TestNG.xml 
+<suite name = "test Suite" parallel= "tests" thread-count="2">
+	<test name="First Test">
+		<parameter name = "deviceName" value = "Pixel 9">
+		<parameter name = "platformVersion" value = "9">
+		<parameter name = "portNumber" value = "5555">
+	<classes>
+		<class name= "test.sampleTest">
+	</classes>
+	</test>
+	<test name="Second Test">
+		<parameter name = "deviceName" value = "Pixel 2">
+		<parameter name = "platformVersion" value = "10">
+		<parameter name = "portNumber" value = "6666">
+	<classes>
+		<class name= "test.sampleTest2">
+	</classes>
+	</test>
+</suite>
+==========================================================================================================
+
+Set<String> contextNames = driver.getContextHandles()
+for(string contextName: contextNames){
+if(contextName.contains("webView"){
+driver.context(contextName)
+}}
+
+Alert
+driver.switchTo().alert().accpet()
+==========================================================================================================Change orientation 
+
+((Rotatable)driver).rotate(ScreenOrientation.LANDSCAPE);
+((Rotatable)driver).rotate(ScreenOrientation.PORTRAIT);
+=========================================================================================================
+
+Exceptions 
+
+SessionNotFoundException
+	raised when Appium connection is disconnected or we can not establish connection between sessions
+	
+ElementNotFoundException
+	When an attempt to find an element and element not found
+
+WebDriverException
+	When driver is not existent appium throws this exception
+==========================================================================================================
+
+Common Errors
+device connection, desired capabilities, element locating strategies, handling native and hybrid context, app installation and launching, appium server set and configuration with envirnemtn variable 
+
+==========================================================================================================
+
+IOException: Fully checked exception.
+RuntimeException: Unchecked exception.
+InterruptedException: Fully checked exception.
+Error: Unchecked exception.
+Throwable: Partially checked exception.
+ArithmeticException: Unchecked exception.
+NullPointerException: Unchecked exception.
+Exception: Partially checked exception.
+FileNotFoundException: Fully checked exception.''
+
+==========================================================================================================
+ioS commands for appium
+
+appium driver install xcuitest
+
+xcrun simctl
+This command is used to manage the Simulator and should display information about its usage.
+
+
+Command to get list of real device as well as simulator 
+xcrun xctrace list devices
+
+brew install ideviceinstaller --HEAD
+
+brew install libimobiledevice
+A library to communicate with services on iOS devices using native protocols. Features libimobiledevice is a cross-platform software library that talks the protocols to interact with iOS devices
+
+brew uninstall --ignore-dependencies usbmuxd
+
+brew uninstall --ignore-dependencies libimobiledevice
+
+brew uninstall --ignore-dependencies ios-webkit-debug-proxy
+
+brew install usbmuxd --HEAD
+
+brew install libimobiledevice --HEAD
+
+brew install ios-webkit-debug-proxy --HEAD
+
+Only simulator
+$ xcrun simctl list
+ xcrun simctl create My-iphone7
+ 
+$xcrun simctl shutdown C8C050F3–062D-4444-A888-BBEC783E31BD
+$ xcrun simctl erase C8C050F3–062D-4444-A888-BBEC783E31BD
+xcrun simctl boot C86A559A-1F50–40D1–8D84–954EDFBBCE18
+.ipa for real device- ios package App store
+.app for simulator
+apk - android applicaitonpackage 
+=========================================================================================================
+ThreadLoalDriver 
+    static 
+
+==========================================================================================================
+Zoom in and Zoom out 
+
+MultiTouchAction multiTouchAction = new MultiTouchAction(driver);
+	
+	TouchAction zoomOut = new TouchAction(driver);
+	zoomOut.press(point(center_X,center_Y-10)).moveTo(point(center_X,center_Y-200)).release();
+	
+	TouchAction zoomIn = new TouchAction(driver);
+	zoomIn.press(point(center_X,center_Y+10)).moveTo(point(center_X,center_Y+200)).release();
+	
+	multiTouchAction.add(zoomOut).add(zoomIn).perform();
+
+==========================================================================================================
+appium flags
+
+--address’: Sets the IP address of the server.
+--port’: Sets the port number of the server.
+--session-override’: Enables the server to override any existing sessions.
+--no-reset’: Disables the server's reset behavior, which clears the app data between sessions.
+--log-level’: Sets the server's log level.
+--log-timestamp’: Enables or disables the timestamp in the server's logs.
+--relaxed-security’: The server can run with relaxed security settings.
+--default-capabilities’: Sets the default capabilities that the server uses if no capabilities are provided when starting a session.
+
+==========================================================================================================
+Locators
+
+ID, Class,  accessibility id (android-> content-descm ios-> text/ name of UI)
+
+iOS- prdicate string (Apple Dev thing) -> basic comparision & Matching
+type=="XUIElementTypeButton" AND Value BEGINSWITH[C] 'bla' and visible=1
+any visible buttong whose value begins with bla
+String Selector = "type=='XUIElementTypeButton' AND Value BEGINSWITH[C] 'bla' and visible=1"
+driver.findElement(Mobile.By.iOSNSPredicateString(Selector)
+
+
+
+iOS class Chain- Developed by APPIUM
+Xoath but filters are basic child/descedent indexing/predicate string matching
+String selector = XCUIElementTypeWindow[2]-> select 2nd window
+
+driver.findElement(Mobile.By.iOSClassChain(Selector))
+======================================================================================================
+Ways to execution parallel execution of Appium tests
+
+Running multiple Appium servers, and sending one session to each server
+Running one Appium server, and sending multiple sessions to it
+Running one or more Appium servers behind the Selenium Grid Hub, and sending all sessions to the Grid Hub
+Leveraging a cloud provider (which itself is running many Appium servers, most likely behind some single gateway)
+
+for client side Parallel Testing - Client Side
+Use sure file plugin of maven 
+
+the Surefire plugin, which lets you update your pom.xml with the following kind of configuration:
+
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-surefire-plugin</artifactId>
+  <configuration>
+    <parallel>methods</parallel>
+    <threadCount>4</threadCount>
+  </configuration>
+</plugin>
+
+1. Running multiple Appium servers, and sending one session to each server
+appium -p 10000  # server 1
+appium -p 10001  # server 2
+Then, each test thread would need to adjust the URL of the Appium server to include the appropriate port, for example:
+
+
+During parallel execution we have to make sure to pass 
+udid: if you don't include this capability, the driver will attempt to use the first device in the list returned by ADB.
+
+systemPort: to communicate to the UiAutomator2 process, Appium utilizes an HTTP connection which opens up a port on the host system as well as on the device. The port on the host system must be reserved for a single session, which
+
+chromeDriverPort: in the same way, if you're doing webview or Chrome testing, Appium needs to run a unique instance of Chromedriver on a unique port
+
+for ioS
+
+
+bundleid 
+xcrun simctl listapps {DEVICE_UUID}
+
+
+to get udid
+xcrun simctl list devices 
+
+xcrun  help build Xcode projects in a headless context
+
+ ‘simctl’ binary to interact with iOS simulators from command line
+ 
+OR 
+Simulator
+ideviceinstaller -l -o list_all
+real device
+ideviceinstaller -u <UDID> -l -o list_all
+
+
+===============================================================================================================
+((TakeScreenShot)driver.getScreenshotAs(outputType.File)//outputType.Byte, outputType.Base64
+
+Device Setting
+driver.setSetting(Setting.KEYBOARD_AUTOCORRECTION, false);
+
+driver.getSettings(); // returns Map<String, Object>
+
+==================================================================================================
+driver.openNotifications();
+
+    List<WebElement> allnotifications=driver.findElements(By.id("android:id/title"));
+
+    for (WebElement webElement : allnotifications) {
+        System.out.println(webElement.getText());
+        if(webElement.getText().contains("something")){
+            System.out.println("Notification found");
+            break;
+        }
+    }
+==================================================================================================================Challenges 
+1. iFrame
+2. Safari automation 
+3. Redme not working 
+4. yono app not able to get mirrored same technology used in GPay
+
+
+https://www.jsonschema2pojo.org/
+
+==================================================================================================================
+
+Hardware key 
+ioS
+JavaScriptExecutor jse = (javascriptExecutor)driver
+  HashMap<String, Object> args = new HashMap<>();
+            args.put("name", Home);  // volume up / volume down
+            iosDriver.executeScript("mobile: pressButton", args);
+
+
+Andriod 
+
+driver.presskey(new KeyEvent().withKey(AndroidKey.Home)
+driver.longPresskey(new KeyEvent().withKey(AndroidKey.Power)
+
+
+driver.getPerformanceData("mypackage","cpuinfo", 6) //return List<List<Object>>
+
+
+Reset
+ioS
+Norest- Do not destroy or shut down simulator 
+Default- uninstall app, shut down simulator do not destroy simulator
+full- Uninstallapp before and after read device, destroy simulator before and after test
+above happen only before if ewstOnSessionStartOnlytrue
+
+android
+noreset Do not stop, clear app data, do not uninstall app
+default- stop and clear app data from test do not uninstall app
+full reset- stop and clear app data from test  uninstall apk before session start and after test
+
+
+
+
+appium:webviewConnectTimeout value 9000
+IncludeSafariInWebviews value true

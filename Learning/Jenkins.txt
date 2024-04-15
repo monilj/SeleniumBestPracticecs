@@ -1,0 +1,54 @@
+Jenkins 
+WebHooks
+Webhooks are HTTP callbacks that notify Jenkins when specific events occur in your version control repository. These events typically include code pushes, pull requests, or branch creations. Jenkins can listen for these events and trigger pipeline builds automatically, ensuring that your CI/CD process stays up to date with code changes.
+
+
+Jenkins job
+
+Enable Project-based security
+	Inheritance Strategy- Inherite permissions from parent ACL
+	
+Restrict where the project can be run
+Set slave for this else run available node 
+
+Soruce code manamgement 
+Git setup- Repo, creds, branch
+
+Build peridically
+MINUTE (0-59), HOUR (0-23), DAY (1-31), MONTH (1-12), DAY OF THE WEEK (0-6)
+30 08 * * 1-5
+start build daily at 08:30 in the morning, Monday - Friday:
+
+
+
+Build envirnment- Delete workspace before builds start
+
+Terminate a build if its stuck- 
+timout strategy- Absolute, deadline, elastic, no activity
+timeout minutes
+
+Build steps , inject variable, publish report, 
+email notifiction - project from (mention email id from mail triggered), project recipent list,  recepnt reply to list, default subject, default content, attachment, 
+set timeout if want to timebound
+
+General -> This is project is parameterized 
+once checked this checkbox - add parameter -
+Boolean parameter, choice parameter, file parameter, String parameter
+Choice parameter- name, choices, description
+
+=-=========================================================================================
+Jenkins pipeline 
+Jenkinsfile (Declarative Pipeline)
+/* Requires the Docker Pipeline plugin */
+pipeline {
+    agent { docker { image 'maven:3.9.6-eclipse-temurin-17-alpine' } }
+    stages {
+        stage('build') {
+            steps {
+                sh 'mvn --version'
+            }
+        }
+    }
+}
+
+=========================================================================

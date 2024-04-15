@@ -1,0 +1,684 @@
+JAVA 
+line 298
+
+StringTokenizer st = new StringTokenizer("my name is khan"," ");  
+     while (st.hasMoreTokens()) {  
+         System.out.println(st.nextToken());  
+     }  
+	 
+================================================================================================================
+	 
+StringTokenizer st = new StringTokenizer("my name is khan"," ");  
+System.out.println(st.countTokens());
+	 
+countTokens()	Returns the total number of tokens present
+hasMoreToken()	Tests if tokens are present for the StringTokenizer’s string
+nextElement()	Returns an Object rather than String
+hasMoreElements()	Returns the same value as hasMoreToken
+nextToken()	Returns the next token from the given StringTokenizer. 
+================================================================================================================
+reverse of sentense 
+String s1= "I love india";
+String[] tokens = s1.split(" ");
+for(String token : tokens){
+            System.out.print(token+" ");
+}
+//I love india 
+System.out.println();
+for (int i = tokens.length-1; i>=0;i--) {
+        System.out.print(tokens[i]+" ");
+    }
+//india love I
+}
+
+========================================================================================================
+Count of each string in String array
+String[] array = new String[]{ "shalaka","monil","shalaka","monil" }; 
+    List asList = Arrays.asList(array);
+Set<String> mySet = new HashSet<String>(asList);
+
+for(String s: mySet){
+ System.out.println(s + " " + Collections.frequency(asList,s));
+}
+==========================================================================================================
+Count of integers in array 
+int arr[] = {10, 20, 20, 10, 10, 20, 5, 20};
+        int n = arr.length;
+  
+     Map<Integer, Integer> mp = new HashMap<>();
+        for (int i = 0; i < n; i++)
+        {
+            if (mp.containsKey(arr[i])) 
+            {
+                mp.put(arr[i], mp.get(arr[i]) + 1);
+            } 
+            else
+            {
+                mp.put(arr[i], 1);
+            }
+        }
+        // Traverse through map and print frequencies
+        for (Map.Entry<Integer, Integer> entry : mp.entrySet())
+        {
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
+
+20 4
+5 1
+10 3		
+==========================================================================================================
+Count of each character in string
+String str = "google";  
+
+HashMap <Character, Integer> charCount = new HashMap<>();  
+for (int i = str.length() - 1; i >= 0; i--)   
+{  
+	if(charCount.containsKey(str.charAt(i)))   
+		{  
+			int count = charCount.get(str.charAt(i));  
+			charCount.put(str.charAt(i), ++count);  
+		}   
+	else   
+		{  
+		charCount.put(str.charAt(i),1);  
+		}  
+}  
+	System.out.println(charCount);  
+}
+==========================================================================================================
+
+ Scanner myObj = new Scanner(System.in);  // Create a Scanner object
+    System.out.println("Enter username");
+
+    String userName = myObj.nextLine();  // Read user input
+    System.out.println("Username is: " + userName);  // Output user input
+==========================================================================================================
+
+java split
+        String[] arrOfStr = str.split("@", 2);
+parameters: regex, limit
+==========================================================================================================
+SORTING
+The sorting is a way to arrange elements of a list or array in a certain order.
+
+Bubble sort
+Compare adjecent element and swap it with correct position
+
+Selection sort
+Select element with index starting with 0. Find smallest element and replace its position and goes on
+
+Insertion sort
+pick element keep checking with adjusant element on right as well as left and keep it at correct location 
+
+Merge sort
+it divide array in 2 halves. keep sorting both halves and then merge it and again sort it
+
+==========================================================================================================
+revers of number 
+int n, rev, sum=0;
+while(n!=0)
+{
+	rev=n%10;
+	sum = sum*10 + rev
+	n = n/10
+}
+sout(sum)
+
+==========================================================================================================
+Addition of integer in number
+int n, r, sum=0;
+Scanner sc = new Scanner(System.in)
+int n = sc.nextInt();
+
+while(n>0){
+r= n%10;
+sum = sum + r;
+n=n/10;
+}
+Sout(sum)
+
+==========================================================================================================
+Factorial- Product of all positive integer less than or equal to give number 
+
+Scanner sc = new Scanner(System.in);
+num = sc.nextInt();
+int num, fact=1;
+for(int i=num; i>0; i--)
+{
+	fact=fact*i;
+}
+SOUT(fact)
+==========================================================================================================
+
+Fibonacci
+Each number is sum of 2 preceding one 
+int num1, num2, num, sum=0;
+//num = till how many numbers you want fibonacci like fist 10
+
+num1=0
+num2=1
+for(int i=0;i<num;i++)
+{
+	sum=num1 + num2;
+	num1=num2
+	num2=sum;
+	SOUT(SUM);
+}
+
+==========================================================================================================
+Perfect no
+A number whose sum of factors (excluding the number itself) is equal to the number is called a perfect number
+
+int sum=0,n;
+Scanner sc = new Scanner(System.In);
+n=sc.nextInt();
+for(int i=1; i<n;i++){
+if(n%i==0)
+{
+	sum=sum+i;
+}
+}
+if(sum==n)
+	SOUT("perfect no)
+else
+	SOUT("not perfect no)
+==========================================================================================================
+
+Prime no
+Prime number is a number that is greater than 1 and divided by 1 or itself only.
+int num, boolean flag=false;
+for(int i=2; i<n/2;i++)
+{
+	if(n%i==0)
+	{
+		flag=true;
+		break;
+	}
+}
+if(!flag)
+	SOUT(prime number)
+else
+	SOUT(not a prime number)
+==========================================================================================================
+Reverse of string 
+String str, rev="";
+
+Scanner sc = new Scanner(System.In);
+str = sc.nextLine();
+char ch[] = str.toCharArray();
+for(int i=ch.length-1; i>0; i--)
+{
+	rev = rev + ch[i];
+}
+SOUT(rev);
+
+
+Using string builder
+StringBuilder sb = new StringBuilder(str)
+sb.reverse();
+rev = sb.toString();
+SOUT(rev)
+==========================================================================================================
+
+Swap 
+int a, b, temp
+
+a = a+b;
+b = a-b;
+a= a-b
+
+using temp variable
+int temp
+
+temp = a;
+a= b;
+b= temp;
+==========================================================================================================
+Unique element in array
+int array[] = {10,4,3,5,6,4,4,5,3,5,6,5,6,4,4};
+
+HashMap<Integer, Integer> hs= new HashMap<Integer, Integer> 
+for(int j=0; j< array.length; j++)
+{
+	hs.put(array[j],j)
+}
+sout(hashmap.keySet())
+
+
+==========================================================================================================
+
+count-occurrences-of-each-character
+public static void main(String args[])   
+{  
+String str = "google";  
+//HashMap char as a key and occurrence as a value  
+HashMap <Character, Integer> charCount = new HashMap<>();  
+for (int i = str.length() - 1; i >= 0; i--)   
+{  
+if(charCount.containsKey(str.charAt(i)))   
+{  
+int count = charCount.get(str.charAt(i));  
+charCount.put(str.charAt(i), ++count);  
+}   
+else   
+{  
+charCount.put(str.charAt(i),1);  
+}  
+}  
+System.out.println(charCount);  
+}  
+}  
+==================================================================================================================
+Reverse given sentence in java 
+String[] words = sentence.split(" ");
+String[] reversedWords = ArrayUtils.reverse(words);
+String reversedSentence = StringUtils.join(reversedWords, " ");
+
+OR
+
+String[] words =  "This is interview question".split(" ");
+
+String rev = "";
+for(int i = words.length - 1; i >= 0 ; i--)
+{
+   rev += words[i] + " ";
+}
+
+// rev = "question interview is This "
+
+OR
+// can also use StringBuilder:
+StringBuilder revb = new StringBuilder();
+for(int i = words.length - 1; i >= 0 ; i--)
+{
+   revb.append(words[i]);
+   revb.append(" ");
+}
+
+Difference between arraylist & LinkedList
+
+- arraylist uses a dynamic array to store the elements.
+- LinkedList internally uses a doubly linked list to store the elements.
+
+- Manipulation with ArrayList is slow because it internally uses an array. If any element is removed from the array, all the other elements are shifted in memory.	
+- Manipulation with LinkedList is faster than ArrayList because it uses a doubly linked list, so no bit shifting is required in memory.
+
+
+- An ArrayList class can act as a list only because it implements List only.	
+- LinkedList class can act as a list and queue both because it implements List and Deque interfaces.
+
+ArrayList is better for storing and accessing data.	
+LinkedList is better for manipulating data.
+
+6) Generally, when an ArrayList is initialized, a default capacity of 10 is assigned to the ArrayList.		
+There is no case of default capacity in a LinkedList. In LinkedList, an empty list is created when a LinkedList is initialized.
+
+==========================================================================================================
+Hashtable dont allow null key hashmap does
+StringBuilder and StringBuffer are mutable  class - so they have reverse method
+String is immutuable class 
+StringBuilder is synchronized or thread safe
+StringBuffer is not synchronized or thread safe and use by concatenation operator internally 
+
+
+==========================================================================================================
+Initialized an array 
+
+int[] myIntArray = new int[3]; 
+int[] myIntArray = {1, 2, 3};
+int[] myIntArray = new int[]{1, 2, 3};
+
+In java 8 
+int [] myIntArray = IntStream.range(0, 100).toArray(); // From 0 to 99
+
+
+ArrayList
+ It uses a dynamic array to store the duplicate element of different data types. The ArrayList class maintains the insertion order and is non-synchronized.
+ 
+
+ 
+ List 
+ store the ordered collection of objects. It can have duplicate values
+ 
+ LinkedList
+ 
+ It uses a doubly linked list internally to store the elements. It can store the duplicate elements. It maintains the insertion order and is not synchronized
+ 
+ 
+ Stack
+  It implements the last-in-first-out data structure,
+  
+  Queue
+  maintains the first-in-first-out order.
+  
+  Priority Queue-  extends the Queue interface.
+  It holds the elements or objects which are to be processed by their priorities
+  
+  Deque interface extends the Queue interface. In Deque, we can remove and add the elements from both the side. 
+  
+  SET
+  represents the unordered set of elements which doesn't allow us to store the duplicate items.
+  
+  HashSet
+   It represents the collection that uses a hash table for storage. Hashing is used to store the elements in the HashSet. It contains unique items.
+   
+ Tree set
+ TreeSet class implements the Set interface that uses a tree for storage.
+ 
+ HashMap
+ Java HashMap class implements the Map interface which allows us to store key and value pair, where keys should be unique. If you try to insert the duplicate key, it will replace the element of the corresponding key. 
+ 
+ HashMap may have one null key and multiple null values.
+ 
+ =========================================================================================================
+Enum
+
+Enumerations or Java Enum serve the purpose of representing a group of named constants. Java Enums are used when we know all possible values at compile time for example browsers getting used in Tests
+The Enum in Java is a data type which contains a fixed set of constants.
+
+Java enumeration is a class type. Although we don’t need to instantiate an enum using new, it has the same capabilities as other classes. This fact makes Java enumeration a very powerful tool. Just like classes, you can give them constructors, add instance variables and methods, and even implement interfaces.
+
+It can be inside as well as outside of the class
+ 
+enum Color {
+    RED,
+    GREEN,
+    BLUE;
+}
+ 
+public class Test {
+    // Driver method
+    public static void main(String[] args)
+    {
+        Color c1 = Color.RED;
+        System.out.println(c1);
+    }
+}
+There are method enum supports value(), valueOf(), and ordinal()
+for (Color c : Color.values()){  
+System.out.println(c);  
+}  
+
+Color.valueOf("RED") ==>> o/p - RED
+Color.valueOf("RED").ordinal() ==> o/p 0
+
+Difference between enum and class
+both have attributes and methods. But enum constants are public, static, final i.e. unchangable can not be overrident
+enum can be used for month, days, colors, direction
+
+enum Color {
+    RED,
+    GREEN,
+    BLUE;
+ 
+    // Driver method
+    public static void main(String[] args)
+    {
+        Color c1 = Color.RED;
+        System.out.println(c1);
+    }
+}
+==================================================================================================================
+Merge arrays
+import java.util.Arrays; 
+
+
+public class MergeTwoArrays1 { 
+    public static void main(String[] args) 
+    { 
+        // first array 
+        int[] a = { 10, 20, 30, 40 }; 
+  
+        // second array 
+        int[] b = { 50, 60, 70, 80 }; 
+  
+        // determines length of firstArray 
+        int a1 = a.length; 
+        
+        // determines length of secondArray 
+        int b1 = b.length; 
+        
+        // resultant array size 
+        int c1 = a1 + b1; 
+  
+        // create the resultant array 
+        int[] c = new int[c1]; 
+  
+        // using the pre-defined function arraycopy 
+        System.arraycopy(a, 0, c, 0, a1); 
+        System.arraycopy(b, 0, c, a1, b1); 
+  
+        // prints the resultant array 
+        System.out.println(Arrays.toString(c)); 
+    } 
+==================================================================================================
+join 2 arraylists
+
+list1.addAll(list2); 
+
+==================================================================================================
+Custom exception 
+
+
+class InvalidAgeException  extends Exception  
+{  
+    public InvalidAgeException (String str)  
+    {  
+        // calling the constructor of parent Exception  
+        super(str);  
+    }  
+}  
+    
+// class that uses custom exception InvalidAgeException  
+public class TestCustomException1  
+{  
+  
+    // method to check the age  
+    static void validate (int age) throws InvalidAgeException{    
+       if(age < 18){  
+  
+        // throw an object of user defined exception  
+        throw new InvalidAgeException("age is not valid to vote");    
+    }  
+       else {   
+        System.out.println("welcome to vote");   
+        }   
+     }    
+  
+    // main method  
+    public static void main(String args[])  
+    {  
+        try  
+        {  
+            // calling the method   
+            validate(13);  
+        }  
+        catch (InvalidAgeException ex)  
+        {  
+            System.out.println("Caught the exception");  
+    
+            // printing the message from InvalidAgeException object  
+            System.out.println("Exception occured: " + ex);  
+        }  
+  
+        System.out.println("rest of the code...");    
+    }  
+}  
+
+=================================================================================================================
+anagram
+
+String st1 = s1.replaceAll("\\s", "");
+String st2 = s2.replaceAll("\\s", "");
+
+if(st1.length() != st2.length()){
+return false;
+}
+
+else
+{
+char c1[] = st1.toLowerCase().toCharArray();
+char c2[] = st2.toLowerCase().toCharArray();
+
+Arrays.sort(c1);
+Arrays.sort(c2);
+return Arrays.equals(c1,c2)
+}
+
+==================================================================================================================
+if (isAnagram(str1, str2)) {
+            System.out.println(str1 + " and " + str2 + " are anagrams");
+        } else {
+            System.out.println(str1 + " and " + str2 + " are not anagrams");
+        }
+
+public static boolean isAnagram(String s1, String s2) {
+      // remove spaces and convert to lowercase
+      s1 = s1.replaceAll("\\s", "").toLowerCase();
+      s2 = s2.replaceAll("\\s", "").toLowerCase();
+
+      // check if length is same
+      if (s1.length() != s2.length()) {
+        return false;
+      }
+
+      // create an array of size 26
+      int[] count = new int[26];
+
+      // increment count for str1 and decrement count for str2
+      for (int i = 0; i < s1.length(); i++) {
+        count[s1.charAt(i) - 'a']++;
+        count[s2.charAt(i) - 'a']--;
+      }
+
+      // check if all the values in the array are 0
+      for (int i = 0; i < 26; i++) {
+        if (count[i] != 0) {
+          return false;
+        }
+      }
+      return true;
+    }
+================================================================================================
+
+Palindrom
+
+A palindrome number is a number that is same after reverse. For example 545,MADAM 
+
+  int r,sum=0,temp;    
+  int n=454;//It is the number variable to be checked for palindrome  
+  
+  temp=n;    
+  while(n>0){    
+   r=n%10;  //getting remainder  
+   sum=(sum*10)+r;    
+   n=n/10;    
+  }    
+  if(temp==sum)    
+   System.out.println("palindrome number ");    
+  else    
+   System.out.println("not palindrome");    
+}  
+}  
+
+
+String 
+
+      String original, reverse = ""; // Objects of String class  
+      Scanner in = new Scanner(System.in);   
+      System.out.println("Enter a string/number to check if it is a palindrome");  
+      original = in.nextLine();   
+      int length = original.length();   
+      for ( int i = length - 1; i >= 0; i-- )  
+         reverse = reverse + original.charAt(i);  
+      if (original.equals(reverse))  
+         System.out.println("Entered string/number is a palindrome.");  
+      else  
+         System.out.println("Entered string/number isn't a palindrome.");   
+   }  
+}  
+===================================================================
+how to synchronized arraylist
+
+ public static void main(String args[]) {  
+        // Non Synchronized ArrayList   
+        List<String> fruitList = new ArrayList<String>();  
+  
+        fruitList.add("Mango");  
+        fruitList.add("Banana");  
+        fruitList.add("Apple");  
+        fruitList.add("Strawberry");  
+        fruitList.add("Pineapple");  
+  
+        // Synchronizing ArrayList in Java  
+        furitList = Collections.synchronizedList(fruitList);  
+  
+        // we must use synchronize block to avoid non-deterministic behavior  
+        synchronized (fruitList) {  
+            Iterator<String> itr = fruitList.iterator();  
+            while (itr.hasNext()) {  
+                System.out.println(itr.next());  
+            }  
+        }  
+    }  
+==========================================================================================================
+DRY - Don't Repeat Yourself
+
+SOLID
+S- Single repsonsibility principle 
+O- Open-Closed Principle - the module should be open for extension but closed for modification.
+L - Liskove substituion principle 
+ derived classes must be completely substitutable for their base classes. In other words, if class A is a subtype of class B, then we should be able to replace B with A without interrupting the behavior of the program.
+I- Interface Segregation Principle
+The principle states that the larger interfaces split into smaller ones. Because the implementation classes use only the methods that are require
+D- Dependency Inversion Principle
+The principle states that we must use abstraction (abstract classes and interfaces) instead of concrete implementations. High-level modules should not depend on the low-level module but both should depend on the abstraction.
+
+========================================================================================
+Comparator and comparable 
+) Comparable provides a single sorting sequence. In other words, we can sort the collection on the basis of a single element such as id, name, and price.
+
+The Comparator provides multiple sorting sequences. In other words, we can sort the collection on the basis of multiple elements such as id, name, and price etc.
+===============================================================================================
+
+java iterator
+
+. Java Iterator is an interface that is practiced in order to iterate over a collection of Java object components entirety one by one
+
+hasNext() -  The method does not accept any parameter. It returns true if there are more elements left in the iteration. If there are no more elements left, then it will return false.
+
+next()
+it is similar to hasNext() method. It also does not accept any parameter. It returns E, i.e., the next element in the traversal.
+
+remove()
+The main function of this method is to remove the last element returned by the iterator traversing through the underlying collectio
+
+forEachRemaining()
+It is the only method of Java Iterator that takes a parameter. It accepts action as a parameter. Action is nothing but that is to be performed.
+
+
+==========================================================================================================
+java data type
+
+premitive  - 
+Boolean
+Numeric - Character , Integral
+	Character - char
+	Integral- Integer, Floating point
+		Integer- byte, short, int, long
+		Floating point- float, double
+
+Non- premitive
+Classes, Interfaces, Arrays
+
+Non premitive
+
+
+int[] intArray = new int[20]; 
+
+int[] intArray = new int[]{ 1,2,3,4,5,6,7,8,9,10 }; 
+
+int[] intArray = new int[arr1.length]; 
+
+
+https://github.com/monilj/SeleniumWebDriverAndDesignPatterns/blob/main/src/main/java/FactoryPattern/GooglePage.java#L5

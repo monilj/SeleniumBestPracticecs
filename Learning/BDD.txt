@@ -1,0 +1,120 @@
+BDD
+Given,when, then,and, but
+
+
+Tags are nothing but groups in TestNG. it is to group the feature
+In runner file  you can mention tag which you want
+@RunWith(Cucumber.class)
+@CucumberOptions(features= "features",
+				glue= {"testDefinitions"},
+				tags = {"SanityTests"})
+public class TestRunner {
+
+}
+you can add multiple tags as well tags = {"SanityTests, SmokeTests"})
+Skip tag tags = {"SanityTests, ~SmokeTests"})
+================================================================================================
+
+Hooks allow us to perform actions at various points in the cucumber test cycle. Hooks are like listeners.
+
+@Before hooks will be run before the first step of each scenario. They will run in the same order of which they are registered.
+
+@After hooks will be run after the last step of each scenario, even when there are failing, undefined, pending, or skipped steps. They will run in the opposite order of which they are registered.
+
+Cucumber supports only two hooks (Before & After), which works at the start and the end of the test scenario.
+===============================================================================================
+Tagged Hooks
+Tagged Hooks are much like the scenario hooks, but the only difference is that they are executed before and after the specified tag
+
+Before ('tagName') ==> @Before("@Sanity")
+After ('tagName') ==> @After("@Sanity")
+
+if you have common steps then you can combine it 	
+@Before("@Sanity, @Smoke")
+@After("@Sanity, @Smoke")
+====================================================================================================
+Order of execution of hooks :
+Similiar to priority in TestNG
+
+@Before(order = intValue) : runs from lowest to highest, means value 0 would run first, and 1 will be after 0.
+@After(order = intValue) : runs from highest to lowest, means opposite of @Before. Value 1 will run first, and 0 would be after 1.
+
+===================================================================================================
+Common terms
+A behavior is an operation with inputs, actions, and expected outcomes.
+A scenario is the specification of a behavior using formal steps and examples.
+A feature is a desired product functionality often involving multiple behavior
+
+Given: Some given context (Preconditions).
+When: Some Action is performed (Actions).
+Then: Particular outcome/consequence after the above step (Results).
+
+A scenario is a sequence of steps that represents a behavior of the application as expected by the user
+Scenario Outline is used when the same test is performed multiple times with a different combination of values. It uses the "Scenario Outline" keyword and includes placeholders (usually enclosed in angled brackets "<>") in the steps where data varies. The actual data sets are provided in a data table using the "Examples" keyword, and each row of the data table represents a separate test instance. 
+===============================================================================================
+Scenario Outline:
+And user on tripDetail page types on enterdeptartureCityName value "<dept_city>"
+  Examples:
+    |dept_city|arr_city|
+    |Bangalore|Pune    |
+
+    @And("^user on tripDetail page types on enterdeptartureCityName value \"([^\"]*)\"$")
+    public void user_on_tripDetail_page_types_on_enterdeptartureCityName_value(String dept_city) throws Throwable {
+        tripDetailPage.user_on_tripDetail_page_types_on_enterdeptartureCityName_value(dept_city);
+    }
+==================================================================================================
+
+
+Parallel execution 
+
+I achieved cucumber parallelism using courgette-jvm . It worked out of the box and run parallel test at scenario level
+
+Simply inlclude similar runner class in cucumber. My tests are further using RemoteWebdriver to open multiple instances on selenium grid. Make sure grid is up and running and node is registered to the grid.
+
+import courgette.api.CourgetteOptions;
+import courgette.api.CourgetteRunLevel;
+import courgette.api.CucumberOptions;
+import courgette.api.testng.TestNGCourgette;
+import io.cucumber.testng.AbstractTestNGCucumberTests;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+@Test
+@CourgetteOptions(
+        threads = 10,
+        runLevel = CourgetteRunLevel.SCENARIO,
+        rerunFailedScenarios = true,
+        rerunAttempts = 1,
+        showTestOutput = true,
+        reportTitle = "Courgette-JVM Example",
+        reportTargetDir = "build",
+        environmentInfo = "browser=chrome; git_branch=master",
+        cucumberOptions = @CucumberOptions(
+                features = "src/test/resources/com/test/",
+                glue = "com.test.stepdefs",                   
+                publish = true,
+                plugin = {
+                        "pretty",
+                        "json:target/cucumber-report/cucumber.json",
+                        "html:target/cucumber-report/cucumber.html"}
+        ))
+		
+		
+class AcceptanceIT extends TestNGCourgette {
+
+protected RemoteWebDriver createDriver() throws MalformedURLException , IOException {
+                   
+                 Properties properties = new Properties();                
+                ClassLoader loader = Thread.currentThread().getContextClassLoader();                
+                  String hubURL = "http://192.168.1.7:65299/wd/hub";
+                  System.setProperty("webdriver.gecko.driver", "/Users/amit/Desktop/amit/projects/misc/geckodriver");
+                 
+                    FirefoxProfile profile = new FirefoxProfile();
+                    DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+                    capabilities.setCapability(FirefoxDriver.PROFILE, profile);
+                    capabilities.setPlatform(Platform.ANY);    
+                    FirefoxOptions options = new FirefoxOptions();
+                    options.merge(capabilities);                 
+                   driver.set(new RemoteWebDriver(new URL(hubURL),options));
+                   return driver.get();
+        }
+		}

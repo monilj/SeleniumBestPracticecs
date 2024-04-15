@@ -1,0 +1,205 @@
+API 
+
+Manipulate JSON in REST 
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+ObjectMapper mapper = new ObjectMapper();
+File from = new File("D:\\OneDrive - Qualitia Software Pvt. Ltd\\Desktop\\open url suite\\ExecutionProfiles\\defaultExecutionProfile.json");
+JsonNode masterJSON = mapper.readTree(from);
+System.out.println("first json : " + masterJSON);
+JsonNode browserStack = masterJSON.get("browserStack");
+((ObjectNode)browserStack).put("browser", "edge");
+System.out.println("second json : " + masterJSON);
+
+
+A header is authetication/ session cookie 
+Authentication verifies identity of user - who are you 
+authorization determines access rights- What data access you have
+
+ObjectMapper is the main actor class of Jackson library. ObjectMapper class ObjectMapper provides functionality for reading and writing JSON, either to and from basic POJOs
+
+==========================================================================================================
+How to pass Json file 
+1. Send json payload as string
+2. External JSON file- 
+File JSONFile = new File("path_to_file")
+Response response = given().contentType(ContenetType.JSON).body(JsonFile).post()
+
+3. Using HashMap
+Map<String, Object> JSONData = new HashMap<>
+JSONData.put("un","")
+JSONData.put("pw","")
+JSONData.put("age","")
+JSONData.put("email","")
+
+Response response = given().contentType(ContenetType.JSON).body(JSONData).post()
+
+
+4. POJO
+public class POJO(){
+private String un;
+private String pw;
+private String age;
+private String email;
+
+public POJO(){} //constructor
+
+public String getUsername(){
+return un
+}
+
+public void setUserName(string username){
+this.un=name;
+}
+}
+
+USERPOJO userpayload = new USERPOJO()
+userpayload.setUserName("mohit")
+userpayload.setPassword("cfds")
+userpayload.setAge("mohit")
+userpayload.setemail("mohit")
+
+Response response = given().contentType(ContenetType.JSON).body(userpayload).post()
+
+5. using multipart file upload
+sending requires where one or more files are included in payload along with other form data
+testing endpoints are uploading document, images
+
+givn().multipart("file", filePath).formparam("param","value")
+==========================================================================================================
+how to pass query parameter 
+
+ RestAssured.baseURI = getBaseUri();
+        Response res= given().baseURI(baseURI).queryParam("key", "AIzaSyCfuy-yc3FOJVfKUcktNpN1_LJtAusEbj0").
+                body(FileUtils.readFromClassPath("PlaceDetail.json")).
+                when().
+                post("/maps/api/place/add/json").
+                then().assertThat().statusCode(200).and().contentType(ContentType.JSON).and().
+                body("status", equalTo("OK")).extract().response();
+        String responseString=res.asString();
+        System.out.println(responseString);
+        JsonPath js= new JsonPath(responseString);
+        placeid=js.get("place_id");
+======================================================================================================
+
+RestAssured.baseURI= https://www.google.com/
+Response res = given().baseURI(baseURI).param("key", "value").
+when().get(/maps).
+then().assertThat().statusCode(200).
+and().body("results[0].name", equalTo("Sydney"))
+
+or
+
+String responsString = res.asString()
+JsonPath js = new JsonPath(responsString)
+placeid=js.get("place_id")
+
+OR 
+String placeid=js.getString("place_id")
+keep giving dots to handle nested json
+
+
+To handle XML we can use XMLPath like JSONPath
+String xmlResponse =  res.asString()
+XmlPath xmlpath = new XmlPath(xmlResponse);
+String value = xmlpath.getString(user.@id);
+keep giving dots to handle nested XML
+
+Response res = given().auth().preemptive().basic("un","pw").header("accept", "application/json").param("key", "value").body()
+
+auth().
+==========================================================================================================
+
+idempotency is property of certain operation that ensure performing operation multiple times yields same result as if it were executed only once
+GET, HEAD, PUT, DELETE, OPTIONS, and TRACE  are idempotent methods, meaning they are safe to be retried or executed multiple times without causing unintended side effects
+
+In contrast, POST and PATCH are generally considered non-idempotent, as their outcomes may vary with each request.
+==========================================================================================================
+A pre-request script associated with a request will execute before the request is sent. You can write pre-request scripts for your Postman API requests in JavaScript. The Pre request tab allows for any pre- request processing before a request is sent. 
+==========================================================================================================
+
+RequestSpecification is used to create template for API request. It includes common request parameters such as headers, query parameters, body content, authetucatoin 
+
+RequestSpecification comm = new RequestSpecBuild().setBaseURI(baseURI).addHeader("content-type","application/json").build();
+
+given().spec(comm).body()
+
+ResponseSpecification- allow us to create standard template for API response. It include expected status codes, response time, header, body content. It helps asserting common response attribute. 
+
+ResponseSpecification commonResponsSpec = new ResponseSpecBuild().expectedStatusCode(200)
+.expectedContenetType(ContenetType.JSON).build();
+
+given().spec(comm).when()get(/endpoit).then.spec(commonResponsSpec);
+===================================================================================================
+
+Path parameterization in Rest Assured
+give().pathParam("id","sample").when().get("/users/{id}).
+===================================================================================================
+
+serialization Coverting java object in to json
+deserialization json is converted back to java objects
+
+===================================================================================================
+handle ssl/tls certificate
+2 ways to handle
+1 use method like relaxedHTTPSValidation() for less strignet validation
+2. configure SSL context
+
+===================================================================================================
+JSON Path
+it is query langage for json similar XML 
+JSONPATH expressions are used to extract specific parts from json response.
+
+===================================================================================================
+handle conplex json
+you can implement custom serializers and deserializers using jackson and GSON
+
+Define Custom serializers/deserializers
+
+Create class extending StdSerializer and JSONDeserializer from Jackson
+Implement custom serialization and deserialization logic within these classes
+
+Configure ObjectMapper
+Instantiate Jackson's ObjectMapper
+Register your custom serializers and deserializers to the ObjectMapper using SimpleModule
+
+Integrate with Rest Assured
+Set Rest Assured;s objectMapperFactory to custom configured objectMapper
+this ensured rest assured uses custom serializers/deserializers
+
+ObjectMapper objectMapper = new ObjectMapper();
+SimpleModule module = new SimpleModule();
+module.addSerializer(MyClass.class, new MyCustomSerializer());
+module.addDeserializer(MyClass.class, new MyCustomDeserializer());
+objectMapper.registerModule(module);
+RestAssured.objectMapperFactory = (type,s )-> objectMapper;
+===================================================================================================
+Implement Oauth 2.0
+1. Obtain Oauth 2.0 token 
+get access token from OAuth 2.0 provider by making request to token endpoints of the OAuth server with client creds
+
+2. Use token in Rest Assured requests by adding token to Authentication header as bearer token
+
+String accessToken = "token";
+given().auth().oauth2(accessToken).when().get("/endpoints").then().statusCode(200)
+
+===================================================================================================
+Customized & extend rest assured functionality
+
+1. Custom Filters- implementing filter interface, allow us to intercept and modify request and responses
+
+2. Custom matchers- we can develop custom Hamcrest matchers particularly useful when standard matchers does not fullfill specific validation requirement 
+
+3. Request & Response specifications - To avoid duplicatetion we can use RequestSpecBuilder and ResponseSpecBuilder. These builder help to create reusable request and response specifications that can use across multiple tests
+
+4. Integrate with other java library - integrate with other java libraries to enhanced functionality. for ex. use json libraries for complex json manipulation 
+===================================================================================================

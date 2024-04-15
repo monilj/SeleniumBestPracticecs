@@ -1,0 +1,771 @@
+Selenium
+
+POM
+https://github.com/naveenanimation20/PageObjectModel/blob/master/src/test/java/com/crm/qa/testcases/ContactsPageTest.java
+XPATH
+
+//div[contains(@class,"select-place-holder")] : xpath of project dropdown on Develop tabm
+
+//a[@title='Women']/following-sibling::ul
+
+//a[contains(text(),’Download File’)]
+
+//*[text()='Button']
+==========================================================================================================
+PageFactory
+
+    @FindBy(id = "com.makemytrip:id/gps_intro_button")
+    private MobileElement gpsPopup;
+	
+    @FindBys({@FindBy(className = "android.widget.RelativeLayout")})
+    List<MobileElement> selectbus;
+
+
+    public BusSearchPage(AndroidDriver driver) {
+        super(driver);
+   //     PageFactory.initElements(driverClass, this);
+
+    }
+	
+	==========================================================================================================
+
+drop down in selenium
+Select dropdown = new Select(driver.findElement(By.id("designation")));
+dropdown.selectByVisibleText("Programmer ");
+dropdown.selectByIndex(1);
+dropdown.selectByValue("prog");
+
+List <WebElement> op = s.getOptions();
+      int size = op.size();
+      for(int i =0; i<size ; i++){
+         String options = op.get(i).getText();
+         System.out.println(options);
+      }
+Select select = new Select(driver.findElement(By.xpath("//select")));
+WebElement option = select.getFirstSelectedOption();
+
+Select s = new Select(e);
+boolean l = s.isMultiple();
+s.deselectAll();
+
+
+	
+==========================================================================================================
+background color
+
+WebElement el = driver.find()
+el.getCssValue("font-size");
+el.getCssValue("background-color"));
+==========================================================================================================
+
+SVG- scalable vector graphics it is vector image format 
+//*[name()='svg' and @class='gb_h']
+
+with some tag, tag name should be local-name and attribute @
+
+//*[name()='svg']//*[local-name()='image' and @width='24']
+==========================================================================================================
+Shadow root
+
+Shadow DOM serves for encapsulation. It allows a component to have its very own “shadow” DOM tree, that can’t be accidentally accessed from the main document, 
+we can only access if shadow root is open
+http://watir.com/examples/shadow_dom.html
+
+document.querySelector("#shadow_host").shadowRoot.querySelector("input[type=text]:nth-child(4)")
+
+JavaScriptExecutor jse = (JavaScriptExecutor)driver;
+WebElement inp = (WebElement) jse.executeScript("return document.querySelector('#shadow_host').shadowRoot.querySelector('input[type=text]:nth-child(4)')")
+
+set value 
+String jss= "argument[0].setAttribute('value','monil')";
+((JavaScriptExecutor)driver).executeScript(jss,inp);
+
+==========================================================================================================
+ Switch window
+ 
+ Set<String> handler =  driver.getWindowHandles();
+Iterator<String> it =handler.iterator();
+String childWindow = it.next();
+driver.switchTo().window(childWindow);
+
+alternative
+        for(String winHandle : driver.getWindowHandles()){
+            driver.switchTo().window(winHandle);
+			
+ while(it.hasNext())
+        {
+            String next_tab = it.next();
+            if (!first_tab.equalsIgnoreCase(next_tab))
+            {
+                driver.switchTo().window(next_tab);
+
+                System.out.println("Working on Facebook");
+            }
+        }
+==========================================================================================================
+PSEUDO 
+Psuedo elements ::after 
+
+WebDriver driver = new ChromeDriver();
+driver.get().to("https://monica-official.github.io/Pseudo-Elements/sample-pseudo-element.html");
+driver.manage().window().maximize();
+JavascriptExecutor js = (JavascriptExecutor) driver;
+String text = js.executeScript("return window.getComputedStyle(document.querySelector('.submitButton'),'::before').getPropertyValue('content')")
+                .toString();
+System.out.print(text);
+driver.quit();
+==========================================================================================================
+TakesScreenshot scrShot =((TakesScreenshot)driver);
+File SourceFile=scrShot.getScreenshotAs(OutputType.FILE);
+
+==========================================================================================================
+
+Work with webtable
+
+//Finding number of Rows
+
+List<WebElement> rowsNumber = driver.findElements(By.xpath("//*[@id="content-8b4988b9-2ec9-4e77-9b4d-9c2994bd9e8a"]/div/div/table[1]/tbody/tr[1]/td[1]"));
+int rowCount = rowsNumber.size();
+System.out.println("No of rows in this table : " + rowCount);
+
+//Finding number of Columns
+
+List<WebElement> columnsNumber = driver.findElements(By.xpath("//*[@id="content-8b4988b9-2ec9-4e77-9b4d-9c2994bd9e8a"]/div/div/table[1]/thead/tr/th[1]"));
+int columnCount = columnsNumber.size();
+System.out.println("No of columns in this table : " + columnCount);
+
+//Finding cell value at 4th row and 3rd column
+
+WebElement cellAddress = Rowtable.findElement(By.xpath(“//*[@id="content-8b4988b9-2ec9-4e77-9b4d-9c2994bd9e8a"]/div/div/table[1]/tbody/tr[4]/td[3]”));
+String value = cellAddress.getText();
+System.out.println(“The Cell Value is : “ +value);
+==========================================================================================================
+FRAME
+Int size = driver.findElements(By.tagName("iframe")).size();
+By Index
+driver.switchTo().frame(0);
+
+By Name or Id
+driver.switchTo().frame("id of the element");
+
+By Web Element
+driver.switchTo().frame(WebElement);
+
+How to switch back to the Main Frame
+o move back to the parent frame, you can either use switchTo().parentFrame() or if you want to get back to the main (or most parent) frame, you can use switchTo().defaultContent();
+
+	    driver.switchTo().defaultContent();
+	    driver.switchTo().parentFrame();
+
+
+==========================================================================================================
+Headless execution 
+
+WebDriver driver;
+WebDriverManager.chromedriver().setup();
+ChromeOptions chromeOptions = new ChromeOptions();
+chromeOptions.addArguments("--headless");
+driver = new ChromeDriver(chromeOptions);
+==========================================================================================================
+@DataProvider(name="testdata")
+public Object[][] testDataExample(){
+ReadExcelFile configuration = new ReadExcelFile("Path_of_Your_Excel_File");
+int rows = configuration.getRowCount(0);
+Object[][]signin_credentials = new Object[rows][2];
+
+for(int i=0;i<rows;i++)
+{
+signin_credentials[i][0] = config.getData(0, i, 0);
+signin_credentials[i][1] = config.getData(0, i, 1);
+}
+return signin_credentials;
+}
+
+
+@Test (dataProvider = "data-provider")
+public void myTest (String val) {
+        System.out.println("Passed Parameter Is : " + val);
+    }
+==========================================================================================================
+DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+capabilities.setCapability("pageLoadStrategy", "none");
+driver = new RemoteWebDriver(new URL("http://192.168.3.1:4444/wd/hub"), capabilities);
+
+==========================================================================================================
+driver.get("https://www.google.com/");
+driver.findElement(By.name("q")).click();
+driver.findElement(By.name("q")).sendKeys("Selenium");
+driver.findElement(with(By.tagName("a")).toRightOf(By.linkText("Gmail"))).click();
+
+==========================================================================================================
+Selenium 4 
+Relative Locators- To left of, To right of, Above, Below
+driver.findElement(By.name("q")).sendKeys("Selenium");
+driver.findElement(with(By.tagName("a")).toRightOf(By.linkText("Gmail"))).click();
+
+
+Selenium IDE
+
+Chrome Debugging Protocol - QAs can now use Chrome development properties like Fetch, Network, Profiler, Performance, 
+Application cache
+
+Better Window/Tab Management -  
+	new API – newWindow that allows users to create and switch to a new window/tab without creating a new WebDriver object.
+	driver.get("https://www.google.com/");
+// Opens a new window and switches to new window
+driver.switchTo().newWindow(WindowType.WINDOW);
+
+// Opens BrowserStack homepage in the newly opened window
+driver.navigate().to("https://www.browserstack.com/");
+
+
+Deperecated capabilities replaced with options
+
+Firefox – FirefoxOptions
+Chrome – ChromeOptions
+Internet Explorer (IE) – InternetExplorerOptions
+Microsoft Edge – EdgeOptions
+Safari – SafariOptions
+==========================================================================================================
+Modifications in the Actions Class
+new methods
+
+click(WebElement) - replace moveToElement(onElement).click(). 
+clickAndHold(WebElement)- moveToElement(onElement).clickAndHold(). 
+contextClick(WebElement) - moveToElement(onElement).contextClick(). 
+doubleClick(WebElement)- moveToElement(element).doubleClick(). 
+
+
+==========================================================================================================
+
+Selenium Grid
+Download standalone-3 jar
+hit command on one machine to setup as hub
+java -jar selenium-server-standalone-3.8.1.jar -role hub
+
+Hub
+The hub is the central point where you load your tests into.
+
+Nodes
+Nodes are the Selenium instances that will execute the tests that you loaded on the hub.
+There can be one or more nodes in a grid.
+
+Log in to another machine 
+ java -jar selenium-server-standalone-3.141.59.jar role webdriver -hub http://192.168.1.3:4444/grid/register -port 5566
+
+
+hub will on 4444 of hub machine 
+node will be on 55566 of another machine 
+
+When to use
+Run your tests against different browsers, operating systems, and machines all at the same time
+Save time in the execution of your test suites 
+==========================================================================================================BiDI API
+ Check the browser console logs
+
+Intercept network requests, useful to mock backend APIs
+
+Perform Basic Authentication
+
+Inspect and observe elements in the DOM
+
+Execute bootstrap scripts to improve test execution time
+
+Mock geolocation
+
+Throttle network performance to simulate real world conditions
+
+==========================================================================================================
+
+TestNG
+multiple annotation, grouping, enable/disable tests, dependecy, prioritization, parameterization, data driven testing, generates HTML Report
+
+
+@Test()
+Description - Description of test 
+priority priority of test case
+DependeOnMethod - run after mentioned method
+enabled= false/true - skip/enable test during execution
+groups - club test in single group and mention in TestNG  @test(groups="Smoke Suite")
+parallel execution
+parameterization
+
+
+@beforeSuite, @beforeTest, @BeforeClass, @BeforeMethod, @Test, @AfterMethod, @AfterClass, @AfterTest, @AfterSuite
+
+TestNG Asserts
+AsserTrue(), AssertFalse(), AssertEquals(), AssertNotEquals()
+==========================================================================================================
+
+Priority - 
+By default test execution happens in Ascending order (aplhabetical order of methos name)
+default priority is 0
+
+priority will be integer negative, zero positive
+Negative priority assigned to get higher precedence over default priority
+Test with same priority will execute in alphabetical order 
+1 is higherst priority and 10 is lowest
+in case prioritize and non prioritized - Negative first, then non prioritized with alphabetical order and then prioritized
+
+==========================================================================================================
+Depends on
+@Test(dependsOnMethods = {'OpenBrowser'})
+public void Signin(){}
+
+Sign in is depend on OpenBrowser()
+
+@Test(dependsOnMetods = {'methodName1','methodName2'})
+@Test(dependsOnMetods = {'OpenBrowser','Signin'})
+public void Logout(){}
+Logout is depend on OpenBrowser and Singin
+
+@Test(dependsOnGroups = {'GroupName'})
+Inheriteddependency: We create dependecy among methods belongs to different class by extending class
+Class SuperClass
+{
+@Test
+public void m1(){}
+}
+
+class child extends SuperClass {
+@Test(dependsOnMetods={"m1"})
+public void m2(){}
+}
+
+From TestNg xml 
+<test name = 'ToolsQA'>
+<groups>
+	<dependecies>
+		<group depends-on = "group1" name = "group2"></group>
+	</dependecies>
+</groups>
+
+group= let testng.xml know we are talking about group
+depends-on name of group on which some group is dependent
+name= this group is dependent on some group
+==========================================================================================================
+Groups
+groups are either test or Suite tag
+
+<suite name = "test Suite">
+<groups> 
+	<run>
+		<include name = "UI Test"></include>
+	</run>
+</groups> 
+<test name = "check login">
+<classes>
+<class name = 'com.androd">
+</classes>
+</test>
+</suite>
+
+
+with test
+<suite name = "test Suite">
+<test name = "check login">
+<groups> 
+	<run>
+		<include name = "UI Test"></include>
+	</run>
+</groups> 
+<classes>
+<class name = 'com.androd">
+</classes>
+</test>
+</suite>
+
+
+HOw to create group 
+add this to methods we want to grouped 
+@Test(groups = {"demo"})
+
+Then tell tesng.xml 
+<suite name = "test Suite">
+<test name = "check login">
+<groups> 
+	<run>
+		<include name = "demo"></include>
+	</run>
+</groups> 
+<classes>
+<class name = 'com.androd">
+</classes>
+</test>
+</suite>
+
+Nested groups- Groups inside groups
+
+How to exclude group
+
+<suite name = "test Suite">
+<test name = "check login">
+<groups> 
+	<run>
+		<exclude name = "demo"></exclude>
+	</run>
+</groups> 
+<classes>
+<class name = 'com.androd">
+</classes>
+</test>
+</suite>
+
+Use regular expression in Group TestNG
+@Test(groups = {"demo1"})
+@Test(groups = {"demo2"})
+<suite name = "test Suite">
+<test name = "check login">
+<groups> 
+	<run>
+		<include name = "demo.*"></include>
+	</run>
+</groups> 
+<classes>
+<class name = 'com.androd">
+</classes>
+</test>
+</suite>
+==========================================================================================================
+Parallel execeution in TestNG
+
+Parallel execeution on Test Methods, Class, Suites, tests, instances
+1. either you can select parallel mode and thread cound while generating testng.xml in eclipse 
+2. Paralle methods
+<suite name = "test Suite" parallel= "methods" thread-count="2">
+<test name = "parallel test">
+<classes>
+<class name = 'com.androd">
+</classes>
+</test>
+</suite>
+
+parallel="methods" it will run all test methods in seperate threads. Dependent methods will also run in seperate threads but will respect order specified
+
+3. Parallel classes
+<suite name = "test Suite" parallel= "classes" thread-count="2">
+<test name = "parallel test">
+<classes>
+<class name = 'chrometest">
+<class name = 'Firefoxtest">
+</classes>
+</test>
+</suite>
+
+parallel = "classes" will run all the methods in same cllass in same thread but each class will run on seperate thread
+
+3. On Suite level
+<suite name = "test Suite" parallel= "tests" thread-count="2">
+<test name = "parallel test chrome">
+<classes>
+<class name = 'chrometest">
+</classes>
+</test>
+
+<test name = "parallel test Firefox">
+<classes>
+<class name = 'Firefoxtest">
+</classes>
+</test>
+
+<test name = "parallel test Edge">
+<classes>
+<class name = 'Edge">
+</classes>
+</test>
+
+</suite>
+parallel = "tests" will run all methods in same test tag
+
+
+parallel = "instances" will run all methods in same instance in same thread but 2 methods on 2 different instance will be on different threads
+
+Make sure to provide thread count greater than or equals to parallel tests we do have. else it won;t run paralle unless there is thread available
+
+Cons- dependet test makes difficult to run parallely
+
+==========================================================================================================
+Parameters pass values at run time
+@Test
+@parameters({"val1","val2"})
+public void sum(int v1, int v2){
+int finalSum = v1 + v2;
+}
+it will run through TestNG.xml only
+
+<suite name = "test parameters">
+<test name = "parameter">
+<parameter name "val1" value = "2"/>
+<parameter name "val2" value = "3"/>
+<classes>
+<class name = "parameter">
+</classes>
+</test>
+</suite>
+
+Defing parameter at Suite level
+When you have same parameters using in different methods you can do it at Suite level
+
+<suite name = "test parameters">
+<parameter name "val1" value = "2"/>
+<parameter name "val2" value = "3"/>
+<test name = "parameter">
+<classes>
+<class name = "parameter">
+</classes>
+</test>
+</suite>
+
+Now we can keep adding test names and respective classes in which we have used these parameters it applies to all methods inside all these classes
+
+
+<suite name = "test parameters">
+<parameter name "val1" value = "2"/>
+<parameter name "val2" value = "3"/>
+<test name = "parameter">
+<classes>
+<class name = "parameter">
+</classes>
+</test>
+
+<test name = "same parameter">
+<classes>
+<class name = "same parameter">
+</classes>
+</test>
+
+</suite>
+
+Preference: if we define parameters at test level as well as Suite level highest preference goes to parameter define at test level over Suite level
+
+Optional parameter- If no paramtere value specified then optional paramter value is taken
+
+@Test
+@Parameters(@Optional("Optional parameter is selected") String message)
+public void setMessage() {
+SOUT(message)
+}
+
+<suite name = "test parameters">
+<test name = "parameter">
+<parameter name "message" value = "Normal parameter is selected"/>
+<classes>
+<class name = "parameter">
+</classes>
+</test>
+<test name = "same parameter">
+<classes>
+<class name = "same parameter">
+</classes>
+</test>
+</suite>
+
+if we run this code, as we have not mentioned message parameter for 2nds class so it will take optional parameter
+
+can use with any annotation 
+
+
+==========================================================================================================
+
+REtryAnalyzer
+
+ int retryCount = 0;
+    int maxRetryCount = 2;
+ 
+    public boolean retry(ITestResult result) {
+  
+    if(!result.isSuccess()) {                         //Check if test is failed
+         
+        if(retryCount<maxRetryCount) {                //Check if the maximum number of test execution is reached
+            System.out.println("Retrying Test : Re-running " + result.getName() +
+ " for " + (retryCount+1) + " time(s)."); //Print the number of Retry attempts
+             
+            retryCount++;                             //Increase the maxRetryCount by 1
+             
+            result.setStatus(ITestResult.FAILURE);    //Mark test as failed
+         return true;                                 //Rerun the failed test
+        } else {
+            result.setStatus(ITestResult.FAILURE);    //TestNG marks last run as failed, if last run is max retry
+        } 
+      }else {
+            result.setStatus(ITestResult.SUCCESS);    //TestNG parks test as passed when the test test passes
+             
+      }
+     
+return false;
+    }
+}
+
+
+    @Test(retryAnalyzer = Retry.class)
+    public void verifyHomePage() {}
+	
+==========================================================================================================
+How to use listners
+
+1. first create a listner class implementing listner interface
+2. Add all the methods such as onTestStart(ITestResult result), onTestSuccess(ITestResult result), onTestFailure(ITestResult result), onTestSkipped(ITestResult result), onTestFailedButWithinSuccessPercentage(ITestResult result), onStart(ITestContext context), onFinish(ITestContext context)
+
+ex 
+public class ListenersBlog implements ITestListener {
+}
+
+3. Create a test class and listner annotation to it 
+ex. 
+Syntax: @Listeners(PackageName.ClassName.class) 
+@Listeners(TestNgListeners.ListenersBlog.class)
+public class TestNGListenersTest { 
+
+4. listners interfaces
+ITestListener
+IAnnotationTransformer
+IInvokedMethodListener
+ISuiteListener
+IReporter
+IConfigurable
+IExecutionListener
+IHookable
+IMethodInterceptor
+IConfigurationListener
+
+====================================================================================================
+
+wrapper is defined as an entity that encapsulates and hides the underlying complexity of another entity by means of well-defined interfaces.
+original code 
+
+Wait for element to be clickable
+(new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(By.id("loginButton")));
+Click on element
+driver.findElement(By.id("loginButton")).click();
+
+wrapper will wait and click 
+public static void click(WebDriver driver, By by) {
+	(new WebDriverWait(driver, 10)).until(ExpectedConditions.elementToBeClickable(by));
+	driver.findElement(by).click();
+}
+
+MyElements.click(driver, By.id("loginButton");
+
+=======================================================================================================
+
+Cookies in selenium 
+Set<Cookie> cookie = driver.manage.getCookies()
+
+Get specific cookie
+Cookie cookie = driver.manage().getCookieNamed("cookiename")
+
+Add cookie
+driver.manage().addCookie(new Cookie("Cookiename","value"))
+
+Delete Cookie
+driver.manage().deleteCookieNamed("cookieNamed":)
+
+DeleteAll Cookie
+driver.manage().deleteAllCookies()
+==========================================================================================================
+Read data from Excel
+public static  void main(String args[]) throws IOException {
+        //Create an object of File class to open xlsx file
+        File file =    new File("E:\\TestData\\TestData.xls");
+
+        //Create an object of FileInputStream class to read excel file
+        FileInputStream inputStream = new FileInputStream(file);
+
+        //creating workbook instance that refers to .xls file
+        HSSFWorkbook wb=new HSSFWorkbook(inputStream);
+
+        //creating a Sheet object
+        HSSFSheet sheet=wb.getSheet("STUDENT_DATA");
+        
+        //get all rows in the sheet
+        int rowCount=sheet.getLastRowNum()-sheet.getFirstRowNum();
+        
+        //iterate over all the row to print the data present in each cell.
+        for(int i=0;i<=rowCount;i++){
+            
+            //get cell count in a row
+            int cellcount=sheet.getRow(i).getLastCellNum();
+            
+            //iterate over each cell to print its value
+            System.out.println("Row"+ i+" data is :");
+            
+            for(int j=0;j<cellcount;j++){
+                System.out.print(sheet.getRow(i).getCell(j).getStringCellValue() +",");
+            }
+            System.out.println();
+        }
+    }
+}
+
+HSSFCell cell = sheet.getRow(1).createCell(6);
+          if(confirmationMessage.isDisplayed()){
+              cell.setCellValue("PASS");
+          }else{
+              cell.setCellValue("FAIL");
+          }
+
+//To write into Excel File
+FileOutputStream outputStream = new FileOutputStream("E:\\TestData\\TestData.xls");
+wb.write(outputStream);
+===================================================================================================
+Page load strategy 
+none
+eager
+normal 
+
+To determine whether the Page load is completed or not, Selenium makes use of the document.readyState property. The document.readyState describes the loading state of the document. 
+
+loading – The page is still loading.
+interactive – The page has finished loading, but sub-resources such as images, stylesheets, and frames may still be loading.
+complete – The page and all sub-resources have finished loading.
+
+By default, Selenium WebDriver uses the standard Page Load Strategy, which is NORMAL. It means waiting until the entire webpage and its components, like CSS, images, frames, etc., are loaded.
+
+If the page takes longer to load due to the components mentioned above (or throttling network conditions) and is not important to your script, you can change it to EAGER or NONE to speed up the execution. This value applies to the entire session, so wisely choose it for your project else it might lead to test flakiness.
+
+PageLoadStrategy
+1. Normal ==> 
+	document.readyState ==> complete
+	Used by default by browser and Selenium WebDriver. Waits for all the resources to be downloaded.
+2. Eager ==>
+	document.readyState ==>interactive	
+	Resources like images and CSS might still be loading, but DOM is accessible and ready to interact.
+3. None ==>
+		document.readyState ==>any
+		WebDriver is not blocked at all. Execution continues without any wait as soon as the initial page is loaded.
+==================================================================================================================Challenges
+1 Common object creation in page
+	Duplicate code across page objects leads redudency and maintainace overhead
+2. Requirement changes
+
+remedy
+1. Single resposibility principle 
+2. Open Close principle: when existing requirement changed insread of updating older code create mew code as change in one part may result in cascaded changes
+
+
+
+
+
+
+HOw to handle ssl certicicates and secureiy related issues
+how to manage data
+==============================================================
+
+
+Exception in selenium
+
+UnhandledAlterException
+InvalidSelectorException
+UnsupportedException
+ElementNotFound
+ElementNotSelectable
+ElementNotInteractable
+ElementNotVisible
+NoSuchwindow
+NoSuchElement
+NoSuchFrame
+NoAlertPresent
+StaleElementException
+SessionNotFound
+TimeOutException
+WebDriverExceotion: when webdriver act immidiatly after tet commpletes. Solution: close session after every test driver.close(), driver.quit()

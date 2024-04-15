@@ -1,0 +1,48 @@
+Cloud platforms 
+
+1. Go to tunnle options in Sauce labs 
+2. Sauce itself gives steps to achieve tunnling
+3. Click on Download for windows 
+4 Extract zip
+5. Go inside bin 
+6. you will find sc file
+7. Hit the command given by Sauce
+8.It creates tunnle and provide tunnle id
+9. it may take some time
+10. Once you get message as you may start your test
+11. Sauce will now show Active Tunnle
+12.Copy Tunnle name pass it to TunnleIdentifier capability
+
+
+Perfecto Tunnling 
+
+stem.out.println("Run started");
+ 
+         String browserName = "mobileOS";
+         DesiredCapabilities capabilities = new DesiredCapabilities(browserName, "", Platform.ANY);
+         String host = "demo.perfectomobile.com";
+         // capabilities.setCapability("user", "testuser@perfectomobile.com");
+         // capabilities.setCapability("password", "testpass");
+         capabilities.setCapability("securityToken", "eyJhbGciOiJSUzI1o...XcK7BRhmkEo7qrA");
+         capabilities.setCapability("deviceName", "DEVICEID");
+         capabilities.setCapability("automationName", "Appium");
+         capabilities.setCapability("tunnelId", "0a334599-210a-4d42-aa8e-445071a4070b");
+
+
+
+public class Web_Execution_on_Sauce {
+    public static final String USERNAME = "user_name";
+    public static final String ACCESS_KEY = "access_key";
+    public static final String Exe_URL = "http://" + USERNAME + ":" + ACCESS_KEY + "@ondemand.saucelabs.com:80/wd/hub";
+
+    @Test
+    public void sampleSauce() throws MalformedURLException {
+        MutableCapabilities sauceOptions = new MutableCapabilities();
+        EdgeOptions browserOptions = new EdgeOptions();
+        browserOptions.setCapability("platformName", "Windows 10");
+        browserOptions.setCapability("browserVersion", "91.0");
+        browserOptions.setCapability("sauce:options", sauceOptions);
+        WebDriver driver = new RemoteWebDriver(new URL(Exe_URL), browserOptions);
+    }
+}
+
